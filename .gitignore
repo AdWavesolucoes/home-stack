@@ -1,0 +1,37 @@
+# Variáveis de ambiente — NUNCA commitar
+.env
+*.env
+!.env.example
+
+# Secrets e chaves
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+authorized_keys
+
+# Senhas e tokens
+passwd
+htpasswd
+*.secret
+
+# Dados de containers (volumes)
+data/
+letsencrypt/
+
+# Logs
+*.log
+logs/
+
+# Backups
+*.tar.gz
+*.zip
+*-backup-*
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
