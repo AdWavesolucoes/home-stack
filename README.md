@@ -1,10 +1,10 @@
-# 🏠 home-stack
+# home-stack
 
-Documentação da minha infraestrutura doméstica — servidores, containers, DNS, VPN e tudo que mantém a casa funcionando.
+Documentação da infraestrutura doméstica — DNS, VPN, proxy reverso, monitoramento e serviços de mídia rodando em bare metal e Docker.
 
 ---
 
-## 📐 Visão Geral da Arquitetura
+## Visão Geral da Arquitetura
 
 ```
 Internet
@@ -12,13 +12,15 @@ Internet
     ▼
 [ Roteador ]
     │
-    ├──────────────────────────────────┐
-    ▼                                  ▼
-[ Servidor Principal ]         [ Orange Pi Zero 2W ]
-  DNS Primário                   DNS Secundário
-  Pi-hole + Unbound              Pi-hole + Unbound
-  Tailscale                      Tailscale
-  Docker (15+ serviços)          Gravity Sync
+    ├─────────────────────────────────────┐
+    ▼                                     ▼
+[ Servidor Principal ]           [ Orange Pi Zero 2W ]
+  DietPi (Debian 13)               DietPi
+  DNS Primário                     DNS Secundário (em configuração)
+  Pi-hole + Unbound                Pi-hole + Unbound
+  Tailscale                        Tailscale
+  Docker (9 containers)
+  FTP (vsftpd)
 ```
 
 ### Fluxo DNS
@@ -38,73 +40,33 @@ Dispositivos da rede
 
 ---
 
-## 🖥️ Servidor Principal
+## Servidor Principal
 
-| Componente | Função |
-|------------|--------|
-| **Pi-hole** | DNS primário + bloqueio de anúncios |
-| **Unbound** | Resolver DNS recursivo (porta 5335) |
-| **Tailscale** | VPN mesh para acesso remoto |
-| **Docker** | Orquestração de containers |
+| Componente | Tipo | Função |
+|------------|------|--------|
+| **Pi-hole** | bare metal | DNS primário + bloqueio de anúncios |
+| **Unbound** | bare metal | Resolver DNS recursivo (porta 5335) |
+| **Tailscale** | bare metal | VPN mesh para acesso remoto |
+| **vsftpd** | bare metal | Servidor FTP local |
+| **Docker** | — | Orquestração dos demais serviços |
 
-### 🐳 Containers Docker
+### Containers Docker
 
-| Container | Imagem | Porta | Descrição |
-|-----------|--------|-------|-----------|
-| `cadvisor` | `gcr.io/cadvisor/cadvisor:latest` | 8080 | Monitoramento de containers |
-| `grafana` | `grafana/grafana:latest` | 3000 | Dashboards e visualização |
-| `homepage` | `ghcr.io/gethomepage/homepage:latest` | 3005 | Dashboard de serviços |
-| `kiwix` | `ghcr.io/kiwix/kiwix-tools:latest` | - | Servidor de conteúdo offline |
-| `minecraft` | `itzg/minecraft-server:java8` | - | Servidor Minecraft |
-| `mosquitto` | `eclipse-mosquitto:latest` | - | Broker MQTT |
-| `navidrome` | `deluan/navidrome:latest` | - | Servidor de música |
-| `node-exporter` | `prom/node-exporter:latest` | - | Métricas do sistema |
-| `npm` | `jc21/nginx-proxy-manager:latest` | 80/443 | Proxy reverso |
-| `plex` | `lscr.io/linuxserver/plex:latest` | - | Servidor de mídia |
-| `portainer` | `portainer/portainer-ce:latest` | 9000/9443 | Gestão de containers |
-| `postgres` | `postgres:15` | - | Banco de dados |
-| `prometheus` | `prom/prometheus:latest` | 9090 | Coleta de métricas |
-| `qbittorrent` | `lscr.io/linuxserver/qbittorrent:latest` | - | Cliente BitTorrent |
-| `watchtower` | `containrrr/watchtower:1.7.1` | - | Atualização automática de imagens |
+| Container | Imagem | Porta | Status | Descrição |
+|-----------|--------|-------|--------|-----------|
+| `cadvisor` | `gcr.io/cadvisor/cadvisor` | 8080 | Ativo | Métricas dos containers |
+| `grafana` | `grafana/grafana` | 3000 | Ativo | Dashboards e visualização |
+| `node-exporter` | `prom/node-exporter` | — | Ativo | Métricas do host |
+| `npm` | `jc21/nginx-proxy-manager` | 80/443/81 | Ativo | Proxy reverso |
+| `portainer` | `portainer/portainer-ce` | 9000/9443 | Ativo | Gestão de containers |
+| `prometheus` | `prom/prometheus` | 9090 | Ativo | Coleta de métricas |
+| `watchtower` | `containrrr/watchtower` | — | Ativo | Atualização automática de imagens |
+| `plex` | `lscr.io/linuxserver/plex` | — | Pausado | Servidor de mídia |
+| `qbittorrent` | `lscr.io/linuxserver/qbittorrent` | 8081 | Pausado | Cliente BitTorrent |
 
 ---
 
-## 🍊 Orange Pi Zero 2W — DNS Secundário
-
-Funciona como redundância total de DNS. Se o servidor principal ficar indisponível, o Orange Pi assume automaticamente.
-
-| Componente | Função |
-|------------|--------|
-| **SO** | DietPi |
-| **Pi-hole** | DNS secundário + bloqueio de anúncios |
-| **Unbound** | Resolver DNS recursivo (porta 5335) |
-| **Tailscale** | VPN mesh |
-| **Gravity Sync** | Sincronização com o Pi-hole primário |
-
-### Sincronização com Gravity Sync
-
-A sincronização acontece automaticamente do primário → secundário, mantendo em paridade:
-
-- ✅ Listas de bloqueio (Gravity)
-- ✅ Whitelist / Blacklist
-- ✅ Grupos e clientes
-- ✅ Regex filters
-- ❌ Configuração do Unbound (local em cada instância)
-- ❌ Senha do painel (independente em cada instância)
-
----
-
-## 🔒 VPN — Tailscale
-
-Ambos os servidores estão conectados via Tailscale, permitindo:
-
-- Acesso remoto seguro a todos os serviços
-- DNS do Pi-hole disponível fora de casa
-- Comunicação criptografada entre os nós
-
----
-
-## 📁 Estrutura do Repositório
+## Estrutura do Repositório
 
 ```
 home-stack/
@@ -118,47 +80,30 @@ home-stack/
 │   │   └── pi-hole.conf
 │   ├── tailscale/
 │   │   └── README.md
+│   ├── ftp/
+│   │   └── README.md
 │   └── docker/
 │       ├── README.md
+│       ├── cadvisor/
 │       ├── grafana/
-│       ├── homepage/
+│       ├── node-exporter/
 │       ├── npm/
+│       ├── plex/
+│       ├── portainer/
 │       ├── prometheus/
-│       └── ...
+│       ├── qbittorrent/
+│       └── watchtower/
 ├── orange-pi/
-│   ├── README.md
-│   ├── pihole/
-│   │   └── README.md
-│   ├── unbound/
-│   │   ├── README.md
-│   │   └── pi-hole.conf
-│   ├── tailscale/
-│   │   └── README.md
-│   └── gravity-sync/
-│       └── README.md
+│   └── README.md
 └── rede/
     └── README.md
 ```
 
 ---
 
-## 🚀 Stack de Monitoramento
-
-| Serviço | Função |
-|---------|--------|
-| **Prometheus** | Coleta de métricas |
-| **Node Exporter** | Métricas do host |
-| **cAdvisor** | Métricas dos containers |
-| **Grafana** | Visualização e dashboards |
-
----
-
-## 📝 Notas
+## Notas
 
 - Toda a documentação está em português
 - Senhas e dados sensíveis **nunca** são commitados
 - Use `.env` para variáveis de ambiente e adicione ao `.gitignore`
-
----
-
-*Documentação em constante evolução conforme a infra cresce.*
+- Serviços críticos (Pi-hole, Unbound, Tailscale, FTP) rodam em bare metal para maior estabilidade e disponibilidade
