@@ -1,35 +1,70 @@
-# Servidor Principal
+# Servidor Casa — Documentação
 
-Servidor rodando **DietPi (Debian 13 / Trixie)** em hardware x86_64.
+Documentação da infraestrutura do servidor doméstico rodando **DietPi** (Debian 13 Trixie) em um **Intel Core i7-4770** com 16 GB DDR3.
 
 ---
 
-## Sistema Operacional
+## Arquivos deste diretório
+
+| Arquivo | Descrição |
+|---|---|
+| [`INFRA.md`](INFRA.md) | Hardware, rede, armazenamento, diagrama de arquitetura |
+| [`SERVICOS.md`](SERVICOS.md) | Todos os serviços instalados, containers Docker, stacks |
+| [`docker/`](docker/) | Configurações dos serviços Docker individuais |
+| [`pihole/`](pihole/) | Configuração Pi-hole |
+| [`unbound/`](unbound/) | Configuração Unbound DNS recursivo |
+| [`tailscale/`](tailscale/) | Configuração Tailscale VPN |
+| [`ftp/`](ftp/) | Configuração vsftpd |
+
+---
+
+## Resumo Rápido
 
 | Item | Valor |
-|------|-------|
-| **SO** | DietPi (Debian GNU/Linux 13 Trixie) |
-| **Kernel** | 6.12.x |
-| **Arquitetura** | x86_64 |
-| **Hostname** | DietPi |
+|---|---|
+| OS | DietPi / Debian 13 Trixie |
+| CPU | Intel Core i7-4770 (4C/8T @ 3.4 GHz) |
+| RAM | 16 GB DDR3 Kingston Dual Channel |
+| IP Local | 192.168.0.100 |
+| IP Tailscale | 100.69.59.102 |
+| DNS local | Pi-hole + Unbound |
+| Proxy reverso | Nginx Proxy Manager |
+| Containers ativos | 10 |
 
 ---
 
-## Serviços em Bare Metal
+## Acesso Rápido
 
-Esses serviços rodam diretamente no host, fora do Docker, por serem críticos para o funcionamento da rede. Se o Docker travar ou reiniciar, DNS, VPN e acesso FTP continuam disponíveis.
-
-| Serviço | Documentação |
-|---------|-------------|
-| Pi-hole | [pihole/README.md](pihole/README.md) |
-| Unbound | [unbound/README.md](unbound/README.md) |
-| Tailscale | [tailscale/README.md](tailscale/README.md) |
-| vsftpd (FTP) | [ftp/README.md](ftp/README.md) |
+| Serviço | URL |
+|---|---|
+| Open WebUI (IA) | http://aichat.lan |
+| n8n (automação) | https://n8n.lan |
+| Nextcloud | https://nextcloud.lan |
+| Home Assistant | http://192.168.0.100:8123 |
+| Portainer | https://portainer.lan |
+| Pi-hole | http://dns.lan/admin |
+| NPM Admin | http://proxy.lan |
+| Homepage | http://home.lan |
+| Plex | http://plex.lan:32400/web |
 
 ---
 
-## Serviços Docker
+## Segurança — Arquivos Sensíveis
 
-Os demais serviços rodam em containers Docker.
+> ⚠️ Os arquivos abaixo **NÃO devem ser commitados**. Estão listados no `.gitignore`.
 
-Documentação: [docker/README.md](docker/README.md)
+| Arquivo | Conteúdo sensível |
+|---|---|
+| `/root/n8n-stack/.env` | Senhas PostgreSQL, Redis, n8n, Evolution API key |
+| `/root/stack-automacao/.env` | Senhas PostgreSQL, Redis, n8n, Evolution API key |
+| `/opt/paperclip/.env` | OpenAI API Key |
+| `/opt/stacks/watchtower/docker-compose.yml` | Token do bot Telegram hardcoded |
+| `/opt/nextcloud/docker-compose.yml` | Senhas do banco hardcoded |
+| `/opt/stacks/homeassistant/config/` | Credenciais RTSP da câmera |
+| `/root/pc-monitor-webapp/docker-compose.yml` | Senha MQTT hardcoded |
+
+---
+
+## Hardware Futuro Planejado
+
+- **RTX 3060** (prevista para ago/2026) — habilitar `deepseek-coder-v2:16b` no Ollama

@@ -19,8 +19,10 @@ Internet
   DNS Primário                     DNS Secundário (em configuração)
   Pi-hole + Unbound                Pi-hole + Unbound
   Tailscale                        Tailscale
-  Docker (9 containers)
+  Docker (10+ containers)
   FTP (vsftpd)
+  Samba
+  Ollama (LLM local)
 ```
 
 ### Fluxo DNS
@@ -48,21 +50,41 @@ Dispositivos da rede
 | **Unbound** | bare metal | Resolver DNS recursivo (porta 5335) |
 | **Tailscale** | bare metal | VPN mesh para acesso remoto |
 | **vsftpd** | bare metal | Servidor FTP local |
+| **Samba** | bare metal | Compartilhamento de arquivos (SMB) |
+| **Ollama** | bare metal | Servidor LLM local (porta 11434) |
 | **Docker** | — | Orquestração dos demais serviços |
 
-### Containers Docker
+### Containers Docker Ativos
 
-| Container | Imagem | Porta | Status | Descrição |
-|-----------|--------|-------|--------|-----------|
-| `cadvisor` | `gcr.io/cadvisor/cadvisor` | 8080 | Ativo | Métricas dos containers |
-| `grafana` | `grafana/grafana` | 3000 | Ativo | Dashboards e visualização |
-| `node-exporter` | `prom/node-exporter` | — | Ativo | Métricas do host |
-| `npm` | `jc21/nginx-proxy-manager` | 80/443/81 | Ativo | Proxy reverso |
-| `portainer` | `portainer/portainer-ce` | 9000/9443 | Ativo | Gestão de containers |
-| `prometheus` | `prom/prometheus` | 9090 | Ativo | Coleta de métricas |
-| `watchtower` | `containrrr/watchtower` | — | Ativo | Atualização automática de imagens |
-| `plex` | `lscr.io/linuxserver/plex` | — | Pausado | Servidor de mídia |
-| `qbittorrent` | `lscr.io/linuxserver/qbittorrent` | 8081 | Pausado | Cliente BitTorrent |
+| Container | Imagem | Porta | Descrição |
+|-----------|--------|-------|-----------|
+| `open-webui` | `ghcr.io/open-webui/open-webui` | 8085 | Interface web para LLMs |
+| `nextcloud` | `nextcloud:latest` | 8888 | Armazenamento em nuvem privada |
+| `nextcloud-db` | `mariadb:11` | interno | Banco de dados Nextcloud |
+| `homeassistant` | `ghcr.io/home-assistant/home-assistant` | 8123 (host) | Automação residencial |
+| `npm` | `jc21/nginx-proxy-manager` | 80/443/81 | Proxy reverso |
+| `portainer` | `portainer/portainer-ce` | 9000/9443 | Gestão de containers |
+| `mosquitto` | `eclipse-mosquitto:2` | 1883/9001 | Broker MQTT |
+| `metrics-api` | build local | 5000 | API de métricas para ESP32 |
+| `pc-monitor-webapp` | build local | 3000 | Dashboard de monitoramento via MQTT |
+| `plex` | `lscr.io/linuxserver/plex` | 32400 (host) | Servidor de mídia |
+
+### Stacks Docker Compose
+
+| Stack | Localização | Serviços | Status |
+|-------|-------------|----------|--------|
+| **n8n-stack** | `/root/n8n-stack/` | n8n, n8n-worker, Evolution API, PostgreSQL, Redis | Ativo |
+| Nextcloud | `/opt/nextcloud/` | nextcloud, mariadb | Ativo |
+| Home Assistant | `/opt/stacks/homeassistant/` | homeassistant | Ativo |
+| Watchtower | `/opt/stacks/watchtower/` | watchtower | Ativo |
+| Mosquitto | `/root/docker/mosquitto/` | mosquitto | Ativo |
+| Plex | `/opt/plex/` | plex | Ativo |
+| stack-automacao | `/root/stack-automacao/` | n8n, evolution, postgres, redis | Legada/testes |
+| qbittorrent | `/root/stacks/qbittorrent/` | qbittorrent | Parado |
+
+### Containers Parados / Stacks Inativas
+
+`qbittorrent`, `paperclip`, `homepage`, `traccar`, `kiwix`, `spotify-embed`, `mkcert-web`, `code-server`, `minecraft`, `prometheus`, `grafana`
 
 ---
 
@@ -72,27 +94,19 @@ Dispositivos da rede
 home-stack/
 ├── README.md
 ├── servidor-principal/
-│   ├── README.md
+│   ├── README.md          ← resumo, acesso rápido, segurança
+│   ├── INFRA.md           ← hardware, rede, armazenamento, diagrama
+│   ├── SERVICOS.md        ← todos os serviços, containers, stacks
 │   ├── pihole/
-│   │   └── README.md
 │   ├── unbound/
-│   │   ├── README.md
-│   │   └── pi-hole.conf
 │   ├── tailscale/
-│   │   └── README.md
 │   ├── ftp/
-│   │   └── README.md
 │   └── docker/
-│       ├── README.md
-│       ├── cadvisor/
-│       ├── grafana/
-│       ├── node-exporter/
 │       ├── npm/
 │       ├── plex/
 │       ├── portainer/
-│       ├── prometheus/
-│       ├── qbittorrent/
-│       └── watchtower/
+│       ├── watchtower/
+│       └── ...
 ├── orange-pi/
 │   └── README.md
 └── rede/
@@ -106,4 +120,6 @@ home-stack/
 - Toda a documentação está em português
 - Senhas e dados sensíveis **nunca** são commitados
 - Use `.env` para variáveis de ambiente e adicione ao `.gitignore`
-- Serviços críticos (Pi-hole, Unbound, Tailscale, FTP) rodam em bare metal para maior estabilidade e disponibilidade
+- Serviços críticos (Pi-hole, Unbound, Tailscale, FTP, Samba, Ollama) rodam em bare metal para maior estabilidade
+- Ver [`servidor-principal/SERVICOS.md`](servidor-principal/SERVICOS.md) para lista completa de serviços
+- Ver [`servidor-principal/INFRA.md`](servidor-principal/INFRA.md) para detalhes de hardware e rede
