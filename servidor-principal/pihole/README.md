@@ -41,15 +41,6 @@ Acessível em `http://dns.lan` ou `http://<IP>` (porta 80/443).
 
 ---
 
-## DNS Secundário
-
-O **Orange Pi Zero 2W** atua como DNS secundário. Os dispositivos da rede devem ser configurados com:
-
-- DNS Primário: `192.168.0.100` (este servidor)
-- DNS Secundário: IP do Orange Pi
-
----
-
 ## Domínios Locais (.lan)
 
 Os domínios internos são resolvidos via registros locais no Pi-hole (DNS Records), apontando para o Nginx Proxy Manager que distribui o tráfego para cada serviço.

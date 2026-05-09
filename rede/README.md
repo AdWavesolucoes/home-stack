@@ -14,11 +14,8 @@ Internet
     │
     └──── LAN 192.168.0.0/24
               │
-              ├── 192.168.0.100   Servidor Principal (DietPi x86_64)
-              │                    Pi-hole, Unbound, Tailscale, Docker
-              │
-              └── Orange Pi Zero 2W  (IP a definir)
-                                   DNS Secundário (em configuração)
+              └── 192.168.0.100   Servidor Principal (DietPi x86_64)
+                                   Pi-hole, Unbound, Tailscale, Docker
 ```
 
 ---
@@ -28,7 +25,6 @@ Internet
 | Papel | Endereço | Serviço |
 |-------|----------|---------|
 | DNS Primário | `192.168.0.100:53` | Pi-hole |
-| DNS Secundário | IP Orange Pi `:53` | Pi-hole (em configuração) |
 | Resolver recursivo | `127.0.0.1:5335` | Unbound (local, não exposto) |
 
 ---

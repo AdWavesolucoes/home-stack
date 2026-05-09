@@ -12,13 +12,11 @@ Internet
     ▼
 [ Roteador ]
     │
-    ├─────────────────────────────────────┐
-    ▼                                     ▼
-[ Servidor Principal ]           [ Orange Pi Zero 2W ]
-  DietPi (Debian 13)               DietPi
-  DNS Primário                     DNS Secundário (em configuração)
-  Pi-hole + Unbound                Pi-hole + Unbound
-  Tailscale                        Tailscale
+    ▼
+[ Servidor Principal ]
+  DietPi (Debian 13)
+  DNS — Pi-hole + Unbound
+  Tailscale
   Docker (10+ containers)
   FTP (vsftpd)
   Samba
@@ -107,8 +105,6 @@ home-stack/
 │       ├── portainer/
 │       ├── watchtower/
 │       └── ...
-├── orange-pi/
-│   └── README.md
 └── rede/
     └── README.md
 ```
