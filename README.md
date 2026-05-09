@@ -71,13 +71,11 @@ Dispositivos da rede
 
 | Stack | Localização | Serviços | Status |
 |-------|-------------|----------|--------|
-| **n8n-stack** | `/root/n8n-stack/` | n8n, n8n-worker, Evolution API, PostgreSQL, Redis | Ativo |
 | Nextcloud | `/opt/nextcloud/` | nextcloud, mariadb | Ativo |
 | Home Assistant | `/opt/stacks/homeassistant/` | homeassistant | Ativo |
 | Watchtower | `/opt/stacks/watchtower/` | watchtower | Ativo |
 | Mosquitto | `/root/docker/mosquitto/` | mosquitto | Ativo |
 | Plex | `/opt/plex/` | plex | Ativo |
-| stack-automacao | `/root/stack-automacao/` | n8n, evolution, postgres, redis | Legada/testes |
 | qbittorrent | `/root/stacks/qbittorrent/` | qbittorrent | Parado |
 
 ### Containers Parados / Stacks Inativas

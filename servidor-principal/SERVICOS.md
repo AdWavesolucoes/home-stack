@@ -154,41 +154,6 @@
 
 ## Stacks Docker Compose
 
-### Stack: n8n-stack (`/root/n8n-stack/`) — **STACK PRINCIPAL**
-
-Stack de automação com n8n em modo fila + Evolution API + PostgreSQL + Redis.
-
-| Serviço | Imagem | Porta | Descrição |
-|---|---|---|---|
-| `postgres` | `postgres:16-alpine` | interno | Banco de dados (n8n + evolution) |
-| `redis` | `redis:7-alpine` | interno | Cache e fila de execuções |
-| `n8n-main` | `n8nio/n8n:latest` | `5678` | n8n editor + webhooks |
-| `n8n-worker` | `n8nio/n8n:latest` | — | Worker de execuções (5 simultâneas) |
-| `evolution-api` | `atendai/evolution-api:latest` | `8082` | API WhatsApp Web (Evolution API v2) |
-
-**Rede:** `172.20.0.0/16` (bridge `br-n8n-stack`)  
-**Configuração:** `.env` (ver `docker-compose/n8n-stack.env.example`)  
-**Dados:** `./data/postgres`, `./data/redis`, `./data/n8n_storage`, `./data/evolution_instances`  
-**URL n8n:** `https://n8n.lan`  
-**URL Evolution:** `https://evolution.lan`
-
-> ⚠️ O arquivo `.env` contém credenciais sensíveis — **não commitar** (ver `.gitignore`)
-
----
-
-### Stack: stack-automacao (`/root/stack-automacao/`) — stack legada/testes
-
-| Serviço | Imagem | Porta | Descrição |
-|---|---|---|---|
-| `stack_postgres` | `postgres:16-alpine` | `5432` | PostgreSQL |
-| `stack_redis` | `redis:7-alpine` | `6379` | Redis |
-| `stack_n8n` | `n8nio/n8n:latest` | `5678` | n8n |
-| `stack_evolution` | `atendai/evolution-api:latest` | `8080` | Evolution API |
-
-> ⚠️ Stack legada — pode conflitar com portas da n8n-stack. `.env` contém credenciais.
-
----
-
 ### Stack: Nextcloud (`/opt/nextcloud/`)
 
 | Serviço | Imagem | Descrição |
@@ -367,15 +332,6 @@ Servidor de mídia local.
 | `npm_data` | Nginx Proxy Manager |
 | `npm_letsencrypt` | Nginx Proxy Manager (certificados) |
 | `ollama_data` | Ollama |
-| `n8n-stack_n8n_storage` | n8n (n8n-stack) |
-| `n8n-stack_postgres_data` | PostgreSQL (n8n-stack) |
-| `n8n-stack_redis_data` | Redis (n8n-stack) |
-| `n8n-stack_evolution_instances` | Evolution API (n8n-stack) |
-| `stack-automacao_n8n_data` | n8n (stack-automacao) |
-| `stack-automacao_postgres_data` | PostgreSQL (stack-automacao) |
-| `stack-automacao_redis_data` | Redis (stack-automacao) |
-| `stack-automacao_evolution_data` | Evolution API (stack-automacao) |
-| `stack-automacao_evolution_instances` | Evolution API (stack-automacao) |
 | `grafana_data` | Grafana (volumes existem, container não ativo) |
 | `prometheus_data` | Prometheus (volumes existem, container não ativo) |
 
@@ -392,5 +348,4 @@ Servidor de mídia local.
 | `monitor-net` | bridge | 172.24.0.0/16 | pc-monitor, metrics-api |
 | `mosquitto_default` | bridge | 172.23.0.0/16 | Mosquitto |
 | `metrics-api_default` | bridge | 172.25.0.0/16 | metrics-api |
-| `stack_net` (n8n-stack) | bridge | 172.20.0.0/16 | n8n, evolution, postgres, redis |
 | `watchtower_default` | bridge | 172.21.0.0/16 | Watchtower (down) |

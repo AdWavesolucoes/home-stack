@@ -147,8 +147,6 @@ Internet
     │
     └── Nginx Proxy Manager (80/443)
             ├── nextcloud.lan  → :8888  (Nextcloud)
-            ├── n8n.lan        → :5678  (n8n — n8n-stack)
-            ├── evolution.lan  → :8082  (Evolution API)
             ├── portainer.lan  → :9443  (Portainer)
             ├── aichat.lan     → :8085  (Open WebUI)
             ├── proxy.lan      → :81    (NPM Admin)
@@ -188,8 +186,6 @@ Armazenamento
 |---|---|---|
 | `aichat.lan` | Open WebUI | 8085 |
 | `nextcloud.lan` | Nextcloud | 8888 |
-| `n8n.lan` | n8n (n8n-stack) | 5678 |
-| `evolution.lan` | Evolution API | 8082 |
 | `portainer.lan` | Portainer | 9443 |
 | `proxy.lan` | NPM Admin | 81 |
 | `dns.lan` | Pi-hole Admin | 8082 |

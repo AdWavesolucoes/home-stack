@@ -38,7 +38,6 @@ Documentação da infraestrutura do servidor doméstico rodando **DietPi** (Debi
 | Serviço | URL |
 |---|---|
 | Open WebUI (IA) | http://aichat.lan |
-| n8n (automação) | https://n8n.lan |
 | Nextcloud | https://nextcloud.lan |
 | Home Assistant | http://192.168.0.100:8123 |
 | Portainer | https://portainer.lan |
@@ -55,8 +54,6 @@ Documentação da infraestrutura do servidor doméstico rodando **DietPi** (Debi
 
 | Arquivo | Conteúdo sensível |
 |---|---|
-| `/root/n8n-stack/.env` | Senhas PostgreSQL, Redis, n8n, Evolution API key |
-| `/root/stack-automacao/.env` | Senhas PostgreSQL, Redis, n8n, Evolution API key |
 | `/opt/paperclip/.env` | OpenAI API Key |
 | `/opt/stacks/watchtower/docker-compose.yml` | Token do bot Telegram hardcoded |
 | `/opt/nextcloud/docker-compose.yml` | Senhas do banco hardcoded |
