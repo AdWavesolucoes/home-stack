@@ -55,7 +55,6 @@ Internet
 | `dns.lan` | Pi-hole |
 | `grafana.lan` | Grafana |
 | `ha.lan` | Home Assistant |
-| `home.lan` | Homepage (dashboard) |
 | `nextcloud.lan` | Nextcloud |
 | `portainer.lan` | Portainer |
 | `plex.lan` | Plex |
@@ -95,13 +94,9 @@ Rede mesh que conecta todos os dispositivos com IPs `100.x.x.x`, permitindo aces
 |-----------|-----------|-------|------|
 | adwave-landing | Landing page AdWave | `8091` | [→](servidor-principal/docker/adwave-landing/) |
 | cadvisor | Métricas por container | `8084` | [→](servidor-principal/docker/observability/) |
-| code-server | VS Code no navegador | `8443` | [→](servidor-principal/docker/code-server/) |
 | grafana | Dashboards de monitoramento | `3001` | [→](servidor-principal/docker/grafana/) |
 | homeassistant | Automação residencial | host | [→](servidor-principal/docker/homeassistant/) |
-| homepage | Dashboard de serviços | `3005` | [→](servidor-principal/docker/homepage/) |
-| kiwix | Biblioteca offline | `18181` | [→](servidor-principal/docker/kiwix/) |
 | metrics-api | API de métricas (ESP32) | `5000` | [→](servidor-principal/docker/metrics-api/) |
-| minecraft | Servidor Minecraft Forge 1.16.5 | `25565` | [→](servidor-principal/docker/minecraft/) |
 | mosquitto | Broker MQTT (IoT) | `1883` | [→](servidor-principal/docker/mosquitto/) |
 | nextcloud | Nuvem privada | `8888` | [→](servidor-principal/docker/nextcloud/) |
 | node-exporter | Métricas do host | `9100` | [→](servidor-principal/docker/observability/) |
@@ -112,7 +107,6 @@ Rede mesh que conecta todos os dispositivos com IPs `100.x.x.x`, permitindo aces
 | portainer | Gestão visual de containers | `9000` | [→](servidor-principal/docker/portainer/) |
 | prometheus | Coleta de métricas | `9090` | [→](servidor-principal/docker/observability/) |
 | qbittorrent | Cliente BitTorrent | `8081` | [→](servidor-principal/docker/qbittorrent/) |
-| traccar | Rastreamento GPS | `8083` | [→](servidor-principal/docker/traccar/) |
 | watchtower | Atualização automática de imagens | — | [→](servidor-principal/docker/watchtower/) |
 
 ### Stack de Observabilidade

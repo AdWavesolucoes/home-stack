@@ -10,13 +10,9 @@ Orquestração de todos os containers do servidor via Docker Compose.
 |-----------|-----------|--------|
 | [adwave-landing](adwave-landing/) | Landing page AdWave | `http://IP:8091` |
 | [cadvisor](observability/) | Métricas de containers | `http://IP:8084` |
-| [code-server](code-server/) | VS Code no navegador | `http://IP:8443` |
 | [grafana](observability/) | Dashboards de monitoramento | `https://grafana.lan` · `http://IP:3001` |
 | [homeassistant](homeassistant/) | Automação residencial | `https://ha.lan` |
-| [homepage](homepage/) | Dashboard de serviços | `https://home.lan` |
-| [kiwix](kiwix/) | Biblioteca offline (Wikipedia etc.) | `http://IP:18181` |
 | [metrics-api](metrics-api/) | API de métricas para ESP32 | `http://IP:5000` |
-| [minecraft](minecraft/) | Servidor Minecraft Forge 1.16.5 | `IP:25565` |
 | [mosquitto](mosquitto/) | Broker MQTT (IoT) | `IP:1883` |
 | [nextcloud](nextcloud/) | Nuvem privada | `https://nextcloud.lan` |
 | [node-exporter](observability/) | Métricas do host | `http://IP:9100` |
@@ -27,7 +23,6 @@ Orquestração de todos os containers do servidor via Docker Compose.
 | [portainer](portainer/) | Gestão visual de containers | `https://portainer.lan` · `http://IP:9000` |
 | [prometheus](observability/) | Coleta e armazenamento de métricas | `http://IP:9090` |
 | [qbittorrent](qbittorrent/) | Cliente BitTorrent | `http://IP:8081` |
-| [traccar](traccar/) | Rastreamento GPS | `http://IP:8083` |
 | [watchtower](watchtower/) | Atualização automática de imagens | — |
 
 ---
