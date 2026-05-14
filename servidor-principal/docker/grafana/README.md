@@ -2,6 +2,30 @@
 
 Visualização de métricas e dashboards. Consome dados do Prometheus.
 
+> Faz parte da [observability stack](../observability/). Suba pelo `docker-compose.yml` da pasta `observability/`.
+
+---
+
+## Acesso
+
+| URL | Descrição |
+|-----|-----------|
+| `https://grafana.lan` | Acesso via proxy reverso (NPM) |
+| `http://IP:3001` | Acesso direto |
+
+Credenciais: usuário `Lucas` — senha via variável de ambiente (`GF_SECURITY_ADMIN_PASSWORD`).
+
+---
+
+## Dashboards importados
+
+| Dashboard | Descrição |
+|-----------|-----------|
+| Node Exporter Full | Métricas completas do host |
+| cAdvisor Exporter | Métricas por container Docker |
+
+Os JSONs dos dashboards ficam em `../observability/grafana/dashboards/` para reimportação rápida.
+
 ---
 
 ## docker run

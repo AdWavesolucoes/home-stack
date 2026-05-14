@@ -1,6 +1,38 @@
 # qBittorrent
 
-Cliente BitTorrent com interface web.
+Cliente BitTorrent com interface web. Os downloads alimentam automaticamente a biblioteca do Plex.
+
+---
+
+## Acesso
+
+| URL | Descrição |
+|-----|-----------|
+| `http://IP:8081` | Interface web |
+
+---
+
+## Quick Start
+
+```bash
+docker compose up -d
+```
+
+---
+
+## Configurações
+
+| Parâmetro | Valor |
+|-----------|-------|
+| Porta WebUI | `8081` |
+| Porta BitTorrent | `6881` (TCP + UDP) |
+| Downloads | `/mnt/B0CEF741CEF6FE82/media/downloads` |
+
+---
+
+## Integração com Plex
+
+O disco de downloads (`/mnt/B0CEF741CEF6FE82`) é o mesmo montado no Plex como `/torrents`. Arquivos baixados aparecem automaticamente na biblioteca de mídia.
 
 > **Status:** pausado temporariamente.
 

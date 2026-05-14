@@ -1,4 +1,4 @@
-# Nginx Proxy Manager
+# Nginx Proxy Manager (NPM)
 
 Proxy reverso com interface web para gerenciar hosts, certificados TLS e redirecionamentos.
 

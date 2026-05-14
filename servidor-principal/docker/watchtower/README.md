@@ -1,6 +1,45 @@
 # Watchtower
 
-Atualiza automaticamente as imagens Docker dos containers marcados com a label correspondente.
+Atualiza automaticamente as imagens Docker dos containers marcados com a label correspondente. Notifica via Telegram após cada ciclo.
+
+---
+
+## Quick Start
+
+```bash
+cp .env.example .env
+# edite .env com o token do bot Telegram
+docker compose up -d
+```
+
+## Variáveis de Ambiente
+
+| Variável | Descrição |
+|----------|-----------|
+| `WATCHTOWER_NOTIFICATION_URL` | URL do Telegram no formato `telegram://TOKEN@telegram/?chats=CHAT_ID` |
+
+---
+
+## Como funciona
+
+O Watchtower verifica novos releases das imagens no registry a cada **6 horas** (`POLL_INTERVAL=21600`). Quando encontra uma versão mais nova:
+1. Para o container
+2. Baixa a nova imagem
+3. Reinicia com as mesmas configurações
+4. Remove a imagem antiga (`CLEANUP=true`)
+
+## Opt-in por label
+
+Somente containers com a label abaixo são gerenciados:
+
+```yaml
+labels:
+  com.centurylinklabs.watchtower.enable: "true"
+```
+
+## Notificações Telegram
+
+Após cada ciclo de verificação, um relatório é enviado com containers atualizados e falhas.
 
 ---
 
