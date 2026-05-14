@@ -35,16 +35,22 @@ Internet
 
 ## Domínios Internos (.lan)
 
-Os domínios `.lan` são resolvidos pelo Pi-hole via registros DNS locais, apontando para o Nginx Proxy Manager que distribui para cada serviço:
+Os domínios `.lan` são resolvidos pelo Pi-hole via registros DNS locais e roteados pelo Nginx Proxy Manager para cada serviço:
 
-| Domínio | Serviço |
-|---------|---------|
-| `dns.lan` | Pi-hole |
-| `grafana.lan` | Grafana |
-| `metrics.lan` | Prometheus |
-| `portainer.lan` | Portainer |
-| `proxy.lan` | Nginx Proxy Manager |
-| `torrent.lan` | qBittorrent |
+| Domínio | Serviço | Porta interna |
+|---------|---------|---------------|
+| `aichat.lan` | Open WebUI (Ollama) | `8085` |
+| `adwavepaper.lan` | AdWave Landing Page | `8091` |
+| `casa.lan` | Home Assistant | `8123` |
+| `dns.lan` | Pi-hole | `8082` |
+| `evolution.lan` | Evolution API | `8080` |
+| `grafana.lan` | Grafana | `3001` |
+| `mesh.lan` | Nginx Proxy Manager (HTTPS) | `443` |
+| `n8n.lan` | n8n | `5678` |
+| `nextcloud.lan` | Nextcloud | `8888` |
+| `plex.lan` | Plex | `32400` |
+| `portainer.lan` | Portainer | `9000` |
+| `proxy.lan` | NPM — painel admin | `81` |
 
 ---
 

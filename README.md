@@ -52,12 +52,16 @@ Internet
 | Domínio | Serviço |
 |---------|---------|
 | `aichat.lan` | Open WebUI (Ollama) |
+| `adwavepaper.lan` | AdWave Landing Page |
+| `casa.lan` | Home Assistant |
 | `dns.lan` | Pi-hole |
+| `evolution.lan` | Evolution API |
 | `grafana.lan` | Grafana |
-| `ha.lan` | Home Assistant |
+| `n8n.lan` | n8n |
 | `nextcloud.lan` | Nextcloud |
-| `portainer.lan` | Portainer |
 | `plex.lan` | Plex |
+| `portainer.lan` | Portainer |
+| `proxy.lan` | NPM (painel admin) |
 
 > Certificados TLS gerados com **mkcert** e CA raiz própria — HTTPS válido em toda a rede interna sem depender de Let's Encrypt.
 
