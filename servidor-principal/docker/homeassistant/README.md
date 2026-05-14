@@ -8,7 +8,7 @@ Plataforma de automação residencial open-source. Integra dispositivos IoT, sen
 
 | URL | Descrição |
 |-----|-----------|
-| `https://ha.lan` | Acesso via proxy reverso (NPM) |
+| `https://casa.lan` | Acesso via proxy reverso (NPM) |
 | `http://IP:8123` | Acesso direto (modo host) |
 
 ---
@@ -23,9 +23,8 @@ docker compose up -d
 
 ## Integrações ativas
 
-- **MQTT / Mosquitto** — sensores ESP32, PC monitor
-- **Ollama** — integração com LLM local
-- **Bluetooth** — dispositivos BLE via host
+- **MQTT / Mosquitto** — sensores ESP32 e PC monitor via broker local (porta 1883)
+- **Bluetooth** — dispositivos BLE descobertos via namespace do host
 
 ---
 

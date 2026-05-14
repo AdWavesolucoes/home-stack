@@ -43,10 +43,7 @@ Os domínios `.lan` são resolvidos pelo Pi-hole via registros DNS locais e rote
 | `adwavepaper.lan` | AdWave Landing Page | `8091` |
 | `casa.lan` | Home Assistant | `8123` |
 | `dns.lan` | Pi-hole | `8082` |
-| `evolution.lan` | Evolution API | `8080` |
 | `grafana.lan` | Grafana | `3001` |
-| `mesh.lan` | Nginx Proxy Manager (HTTPS) | `443` |
-| `n8n.lan` | n8n | `5678` |
 | `nextcloud.lan` | Nextcloud | `8888` |
 | `plex.lan` | Plex | `32400` |
 | `portainer.lan` | Portainer | `9000` |

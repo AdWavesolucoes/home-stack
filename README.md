@@ -55,9 +55,7 @@ Internet
 | `adwavepaper.lan` | AdWave Landing Page |
 | `casa.lan` | Home Assistant |
 | `dns.lan` | Pi-hole |
-| `evolution.lan` | Evolution API |
 | `grafana.lan` | Grafana |
-| `n8n.lan` | n8n |
 | `nextcloud.lan` | Nextcloud |
 | `plex.lan` | Plex |
 | `portainer.lan` | Portainer |
