@@ -1,0 +1,19 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: America/Sao_Paulo
+      VERSION: docker
+      PLEX_CLAIM: ${PLEX_CLAIM}
+    volumes:
+      - /opt/plex/config:/config
+      - /mnt/B8B615FAB615BA38/fILMES:/movies
+      - /mnt/B0CEF741CEF6FE82:/torrents
+      - /dev/dri:/dev/dri
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"

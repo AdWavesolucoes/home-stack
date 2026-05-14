@@ -1,0 +1,47 @@
+services:
+  nextcloud-db:
+    image: mariadb:11
+    container_name: nextcloud-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - /mnt/nextcloud-raid/db:/var/lib/mysql
+    networks:
+      - nextcloud_net
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    environment:
+      MYSQL_HOST: nextcloud-db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: "192.168.0.100 nextcloud.lan"
+      OVERWRITEPROTOCOL: "https"
+      OVERWRITECLIURL: "https://nextcloud.lan"
+      TRUSTED_PROXIES: "172.16.0.0/12"
+      PHP_OPCACHE_MEMORY_CONSUMPTION: "256"
+      PHP_OPCACHE_INTERNED_STRINGS_BUFFER: "64"
+    volumes:
+      - /mnt/nextcloud-raid/data:/var/www/html/data
+      - /mnt/nextcloud-raid/config:/var/www/html/config
+      - /mnt/nextcloud-raid/apps:/var/www/html/custom_apps
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/nextcloud-custom.ini:ro
+    depends_on:
+      - nextcloud-db
+    networks:
+      - nextcloud_net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+
+networks:
+  nextcloud_net:
+    driver: bridge

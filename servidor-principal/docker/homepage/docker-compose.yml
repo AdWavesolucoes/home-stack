@@ -1,0 +1,15 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    ports:
+      - "3005:3000"
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      TZ: America/Sao_Paulo
+      HOMEPAGE_ALLOWED_HOSTS: "home.lan,192.168.0.100:3005,192.168.0.100"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"

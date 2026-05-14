@@ -1,0 +1,19 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    ports:
+      - "8085:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      OLLAMA_BASE_URL: http://172.17.0.1:11434
+      WEBUI_AUTH: "true"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+
+volumes:
+  open-webui:

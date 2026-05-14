@@ -1,0 +1,17 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: America/Sao_Paulo
+      PASSWORD: ${CODE_SERVER_PASSWORD}
+    volumes:
+      - ./config:/config
+      - /home:/home
+    ports:
+      - "8443:8443"
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"

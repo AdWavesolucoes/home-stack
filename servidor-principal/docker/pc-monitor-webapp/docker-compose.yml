@@ -1,0 +1,19 @@
+services:
+  pc-monitor-webapp:
+    build: .
+    container_name: pc-monitor-webapp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MQTT_BROKER: mqtt://mosquitto:1883
+      MQTT_USER: ${MQTT_USER}
+      MQTT_PASS: ${MQTT_PASS}
+    networks:
+      - monitor-net
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+
+networks:
+  monitor-net:
+    external: true

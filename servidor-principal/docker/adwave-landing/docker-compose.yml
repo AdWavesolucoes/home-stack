@@ -1,0 +1,11 @@
+services:
+  adwave-landing:
+    image: nginx:alpine
+    container_name: adwave-landing
+    restart: unless-stopped
+    ports:
+      - "8091:80"
+    volumes:
+      - ./:/usr/share/nginx/html:ro
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"

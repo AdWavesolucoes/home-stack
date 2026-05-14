@@ -1,0 +1,14 @@
+# Variáveis de ambiente com segredos
+.env
+
+# Dados persistentes gerados em runtime
+**/data/
+**/logs/
+**/config/
+**/letsencrypt/
+
+# Exceções — arquivos de config que fazem parte do repo
+!**/docker-compose.yml
+!**/.env.example
+!**/prometheus/prometheus.yml
+!**/grafana/dashboards/
