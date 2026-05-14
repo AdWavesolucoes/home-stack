@@ -1,0 +1,27 @@
+services:
+  watchtower:
+    image: containrrr/watchtower:1.7.1
+    container_name: watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      DOCKER_API_VERSION: "1.53"
+      WATCHTOWER_LABEL_ENABLE: "true"
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: "21600"
+      WATCHTOWER_NOTIFICATION_REPORT: "true"
+      WATCHTOWER_NOTIFICATION_URL: "telegram://8493215964:AAHXyf9DsuZFesFKyiJh3u5vgQYV1QP1H48@telegram/?chats=5845813814"
+      WATCHTOWER_NOTIFICATION_TEMPLATE: |
+        🐋 *Watchtower — Relatório*
+        {{with .Report}}{{if .Updated}}
+        ✅ *Atualizados:*{{range .Updated}}
+          • {{.Name}}{{end}}
+        {{end}}{{if .Failed}}
+        ❌ *Falhou:*{{range .Failed}}
+          • {{.Name}}{{end}}
+        {{end}}{{if not .Updated}}
+        ⏭️ _Nenhuma atualização disponível._
+        {{end}}{{end}}
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
